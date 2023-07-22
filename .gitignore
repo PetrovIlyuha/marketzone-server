@@ -9,6 +9,24 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+.vscode/launch.json
+.vscode/extensions.json
+
+
+# generated static files
+storage/*
+!storage/images/
+!storage/.gitkeep
+
+storage/images/*
+!storage/images/products/
+!storage/images/.gitkeep
+
+storage/images/products/*
+!storage/images/products/.gitkeep
+
+
+
 # Runtime data
 pids
 *.pid
