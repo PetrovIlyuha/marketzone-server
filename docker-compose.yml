@@ -1,0 +1,88 @@
+version: '3.5'
+
+services:
+  marketzone_postgres:
+    container_name: marketzone-postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: marketzone_admin
+      POSTGRES_PASSWORD: marketzone_admin_pass
+      POSTGRES_DB: marketzone
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/var/www/marketzone/docker-volumes/postgres
+    ports:
+      - 5432:5432
+    # networks:
+    #   - mwnet
+    restart: unless-stopped
+
+  # redis:
+  #   container_name: marketzone-redis
+  #   image: redis:6
+  #   volumes:
+  #     - redis:/data
+  #   ports:
+  #     - 127.0.0.1:6379:6379
+  #   networks:
+  #     - mwnet
+  #   restart: unless-stopped
+
+  pgadmin:
+    container_name: marketzone-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: marketzone@admin.com
+      PGADMIN_DEFAULT_PASSWORD: marketzone
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/www/mw_marketplace/docker-volumes/pgadmin
+    ports:
+      - 127.0.0.1:5050:80
+    # networks:
+    #   - mwnet
+    restart: unless-stopped
+
+  # srv:
+  #   container_name: marketzone-server
+  #   build: .
+  #   # ports:
+  #   #   - 127.0.0.1:6010:6010
+  #   networks:
+  #     - mwnet
+  #   restart: unless-stopped
+#   front:
+#     container_name: marketzone-front
+#     build: ../marketzone-front
+#     # ports:
+#     # - 127.0.0.1:6015:80
+#     networks:
+#       - mwnet
+#     restart: unless-stopped
+
+#   admin:
+#     container_name: marketzone-admin
+#     build: ../marketzone-admin
+#     # ports:
+#     # - 127.0.0.1:6020:6020
+#     networks:
+#       - mwnet
+#     restart: unless-stopped
+
+#   nginx:
+#     container_name: marketzone-nginx
+#     build: ./nginx
+#     ports:
+#       - 127.0.0.1:80:80
+#     networks:
+#       - mwnet
+#     restart: unless-stopped
+
+# networks:
+#   mwnet:
+#     driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  # redis:
