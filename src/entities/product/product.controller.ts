@@ -11,6 +11,7 @@ import {
   HttpStatus,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -26,6 +27,16 @@ export class ProductController {
   async getAllProducts() {
     const products = await this.productService.getAllProducts();
     return { status: 'ok', data: products };
+  }
+
+  @Get('/favorites')
+  @HttpCode(200)
+  async getFavorites(@Query() { ids }) {
+    const numericIds = ids.split(',').map((id) => Number(id));
+    const favoritedProducts = await this.productService.getFavorites(
+      numericIds,
+    );
+    return { status: 'ok', data: favoritedProducts };
   }
 
   @Get('/:id')

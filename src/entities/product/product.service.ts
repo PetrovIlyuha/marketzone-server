@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { genSalt, hash } from 'bcrypt';
 import { Product } from './product.entity';
 
@@ -17,6 +17,12 @@ export class ProductService {
 
   async getProductData(id: number) {
     return await this.productRepository.findOne({ where: { id } });
+  }
+
+  async getFavorites(ids: number[]) {
+    return await this.productRepository.findBy({
+      id: In(ids),
+    });
   }
 
   async createProduct(productData: any) {
