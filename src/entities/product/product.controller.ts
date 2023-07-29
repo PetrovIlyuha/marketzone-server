@@ -32,7 +32,7 @@ export class ProductController {
   @Get('/favorites')
   @HttpCode(200)
   async getFavorites(@Query() { ids }) {
-    const numericIds = ids.split(',').map((id) => Number(id));
+    const numericIds = ids.split(',').map((id: string) => Number(id));
     const favoritedProducts = await this.productService.getFavorites(
       numericIds,
     );
